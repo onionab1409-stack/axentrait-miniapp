@@ -1,0 +1,795 @@
+{
+  "welcome": {
+    "headline": "Вы в двух минутах от лучшей версии вашего бизнеса",
+    "subheadline": "",
+    "description": "",
+    "ctaButton": "Подобрать решение",
+    "socialProof": ""
+  },
+  "questions": [
+    {
+      "key": "role",
+      "step": 1,
+      "title": "Какая ваша роль в компании?",
+      "subtitle": "Фокус: бюджет и сроки или архитектура и стек",
+      "options": [
+        {
+          "value": "ceo_director",
+          "label": "CEO / Директор",
+          "icon": "👔",
+          "description": "ROI, сроки, риски, бюджет, контроль"
+        },
+        {
+          "value": "cto_it_director",
+          "label": "CTO / IT‑директор",
+          "icon": "🧠",
+          "description": "Архитектура, безопасность, интеграции, сроки, поддерживаемость"
+        },
+        {
+          "value": "coo_operations",
+          "label": "COO / Операционный",
+          "icon": "⚙️",
+          "description": "Цикл, качество, стабильность, загрузка, SLA"
+        },
+        {
+          "value": "department_head",
+          "label": "Руководитель отдела",
+          "icon": "📌",
+          "description": "Пайплайны, очереди, автоматизация, метрики, SLA"
+        },
+        {
+          "value": "pm_analyst",
+          "label": "PM / Аналитик",
+          "icon": "📊",
+          "description": "Требования, данные, метрики, сценарии, сравнение"
+        },
+        {
+          "value": "other_role",
+          "label": "Другое",
+          "icon": "❓",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "key": "industry",
+      "step": 2,
+      "title": "Ваша отрасль?",
+      "subtitle": "Покажем кейс из вашей сферы",
+      "options": [
+        {
+          "value": "ecommerce",
+          "label": "E-commerce",
+          "icon": "🛒",
+          "description": ""
+        },
+        {
+          "value": "fintech",
+          "label": "Финтех/Банки",
+          "icon": "💳",
+          "description": ""
+        },
+        {
+          "value": "manufacturing",
+          "label": "Производство",
+          "icon": "🏭",
+          "description": ""
+        },
+        {
+          "value": "logistics",
+          "label": "Логистика",
+          "icon": "🚚",
+          "description": ""
+        },
+        {
+          "value": "medtech",
+          "label": "Медицина/Медтех",
+          "icon": "🩺",
+          "description": ""
+        },
+        {
+          "value": "saas",
+          "label": "SaaS/IT‑продукт",
+          "icon": "💻",
+          "description": ""
+        },
+        {
+          "value": "retail",
+          "label": "Ритейл",
+          "icon": "🏬",
+          "description": ""
+        },
+        {
+          "value": "other_industry",
+          "label": "Другое",
+          "icon": "❓",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "key": "companySize",
+      "step": 3,
+      "title": "Размер компании?",
+      "subtitle": "Чтобы подобрать масштаб и пакет",
+      "options": [
+        {
+          "value": "size_1_10",
+          "label": "1–10",
+          "icon": "🌱",
+          "description": "Малые команды, быстрый старт без лишнего"
+        },
+        {
+          "value": "size_11_50",
+          "label": "11–50",
+          "icon": "👥",
+          "description": "Нужно быстрое внедрение без бюрократии"
+        },
+        {
+          "value": "size_51_200",
+          "label": "51–200",
+          "icon": "🏢",
+          "description": "Есть процессы, важны KPI и контроль"
+        },
+        {
+          "value": "size_201_500",
+          "label": "201–500",
+          "icon": "🏬",
+          "description": "Интеграции, безопасность, стабильность, контроль, SLA"
+        },
+        {
+          "value": "size_500_plus",
+          "label": "500+",
+          "icon": "🏦",
+          "description": "Масштаб, комплаенс, SLA, управление изменениями"
+        }
+      ]
+    },
+    {
+      "key": "painArea",
+      "step": 4,
+      "title": "Где боль сильнее всего?",
+      "subtitle": "Подберём направление и релевантный кейс",
+      "options": [
+        {
+          "value": "cyber_risks_compliance",
+          "label": "Киберриски/ПДн",
+          "icon": "🛡️",
+          "description": "Аудит, комплаенс, контроль инцидентов, ремедиация"
+        },
+        {
+          "value": "manual_routine",
+          "label": "Ручная рутина",
+          "icon": "🧾",
+          "description": "Копипаст между системами и ошибки"
+        },
+        {
+          "value": "slow_process_cycle",
+          "label": "Долгий цикл процесса",
+          "icon": "⏱️",
+          "description": "Очереди, согласования, задержки, переделки, потери"
+        },
+        {
+          "value": "data_disagreement",
+          "label": "Отчёты спорят",
+          "icon": "📉",
+          "description": "Excel vs системы, нет единой правды"
+        },
+        {
+          "value": "support_overload",
+          "label": "Перегруз поддержки",
+          "icon": "🎧",
+          "description": "Типовые обращения съедают команду ежедневно"
+        },
+        {
+          "value": "release_instability",
+          "label": "Релизы и простои",
+          "icon": "🚀",
+          "description": "Редкие релизы, риск, сложный откат"
+        }
+      ]
+    },
+    {
+      "key": "goal",
+      "step": 5,
+      "title": "Какая ваша основная цель?",
+      "subtitle": "Расставим приоритеты в рекомендациях",
+      "options": [
+        {
+          "value": "reduce_costs",
+          "label": "Снизить затраты",
+          "icon": "💰",
+          "description": "Сэкономить FTE и операционные расходы"
+        },
+        {
+          "value": "speed_up_cycle",
+          "label": "Ускорить цикл",
+          "icon": "⚡",
+          "description": "Сократить путь от заявки до результата"
+        },
+        {
+          "value": "reduce_risks",
+          "label": "Снизить риски",
+          "icon": "🔒",
+          "description": "Уменьшить вероятность инцидентов и штрафов"
+        },
+        {
+          "value": "increase_revenue",
+          "label": "Увеличить выручку",
+          "icon": "📈",
+          "description": "Быстрее запускать фичи и продажи"
+        },
+        {
+          "value": "improve_quality",
+          "label": "Повысить качество",
+          "icon": "✅",
+          "description": "Меньше ошибок, стабильнее SLA, выше контроль"
+        }
+      ]
+    }
+  ],
+  "routing": {
+    "description": "Правила маршрутизации: несколько правил могут сработать одновременно. Рекомендации объединяются по услугам, кейсам и AI‑демо.",
+    "rules": [
+      {
+        "name": "pain_cybersecurity",
+        "conditions": {
+          "description": "Если ключевая боль — киберриски или ПДн"
+        },
+        "match": {
+          "anyOf": {
+            "field": "painArea",
+            "values": [
+              "cyber_risks_compliance"
+            ]
+          }
+        },
+        "recommend": {
+          "serviceSlugs": [
+            "cybersecurity-audit-protection"
+          ],
+          "caseSlugs": [
+            "fintech-security-regulator-remediation"
+          ],
+          "aiScenario": "faq"
+        }
+      },
+      {
+        "name": "pain_process_cycle",
+        "conditions": {
+          "description": "Если процессный цикл долгий и есть очереди/согласования"
+        },
+        "match": {
+          "anyOf": {
+            "field": "painArea",
+            "values": [
+              "slow_process_cycle"
+            ]
+          }
+        },
+        "recommend": {
+          "serviceSlugs": [
+            "process-optimization-audit-kpi"
+          ],
+          "caseSlugs": [
+            "retail-returns-cycle-reduction"
+          ],
+          "aiScenario": "roi"
+        }
+      },
+      {
+        "name": "pain_manual_routine",
+        "conditions": {
+          "description": "Если много ручного переноса данных между системами"
+        },
+        "match": {
+          "anyOf": {
+            "field": "painArea",
+            "values": [
+              "manual_routine"
+            ]
+          }
+        },
+        "recommend": {
+          "serviceSlugs": [
+            "automation-rpa-crm-erp"
+          ],
+          "caseSlugs": [
+            "logistics-crm-erp-wms-automation"
+          ],
+          "aiScenario": "audit"
+        }
+      },
+      {
+        "name": "pain_support_overload",
+        "conditions": {
+          "description": "Если поддержка перегружена типовыми обращениями"
+        },
+        "match": {
+          "anyOf": {
+            "field": "painArea",
+            "values": [
+              "support_overload"
+            ]
+          }
+        },
+        "recommend": {
+          "serviceSlugs": [
+            "ai-integration-use-cases-mlops"
+          ],
+          "caseSlugs": [
+            "medtech-support-ai-triage"
+          ],
+          "aiScenario": "use-cases"
+        }
+      },
+      {
+        "name": "pain_release_instability",
+        "conditions": {
+          "description": "Если релизы редкие и приводят к простоям"
+        },
+        "match": {
+          "anyOf": {
+            "field": "painArea",
+            "values": [
+              "release_instability"
+            ]
+          }
+        },
+        "recommend": {
+          "serviceSlugs": [
+            "cloud-devops-ci-cd-platform"
+          ],
+          "caseSlugs": [
+            "saas-devops-weekly-zero-downtime-releases"
+          ],
+          "aiScenario": "roi"
+        }
+      },
+      {
+        "name": "pain_data_disagreement",
+        "conditions": {
+          "description": "Если отчёты расходятся и данные разрознены"
+        },
+        "match": {
+          "anyOf": {
+            "field": "painArea",
+            "values": [
+              "data_disagreement"
+            ]
+          }
+        },
+        "recommend": {
+          "serviceSlugs": [
+            "data-analytics-platform-bi"
+          ],
+          "caseSlugs": [
+            "ecommerce-single-source-of-truth"
+          ],
+          "aiScenario": "roi"
+        }
+      },
+      {
+        "name": "goal_reduce_costs",
+        "conditions": {
+          "description": "Если цель — снизить затраты в ближайшие 3–6 месяцев"
+        },
+        "match": {
+          "anyOf": {
+            "field": "goal",
+            "values": [
+              "reduce_costs"
+            ]
+          }
+        },
+        "recommend": {
+          "serviceSlugs": [
+            "automation-rpa-crm-erp",
+            "process-optimization-audit-kpi",
+            "data-analytics-platform-bi"
+          ],
+          "caseSlugs": [
+            "logistics-crm-erp-wms-automation"
+          ],
+          "aiScenario": "roi"
+        }
+      },
+      {
+        "name": "goal_reduce_risks",
+        "conditions": {
+          "description": "Если цель — снизить риски инцидентов и штрафов"
+        },
+        "match": {
+          "anyOf": {
+            "field": "goal",
+            "values": [
+              "reduce_risks"
+            ]
+          }
+        },
+        "recommend": {
+          "serviceSlugs": [
+            "cybersecurity-audit-protection"
+          ],
+          "caseSlugs": [
+            "fintech-security-regulator-remediation"
+          ],
+          "aiScenario": "faq"
+        }
+      },
+      {
+        "name": "industry_retail",
+        "conditions": {
+          "description": "Если отрасль — ритейл (часто критичны возвраты, SLA и качество)"
+        },
+        "match": {
+          "anyOf": {
+            "field": "industry",
+            "values": [
+              "retail"
+            ]
+          }
+        },
+        "recommend": {
+          "serviceSlugs": [
+            "process-optimization-audit-kpi",
+            "automation-rpa-crm-erp"
+          ],
+          "caseSlugs": [
+            "retail-returns-cycle-reduction"
+          ],
+          "aiScenario": "roi"
+        }
+      },
+      {
+        "name": "role_ceo",
+        "conditions": {
+          "description": "Если роль — CEO/Директор (важны сроки, ROI и риски)"
+        },
+        "match": {
+          "anyOf": {
+            "field": "role",
+            "values": [
+              "ceo_director"
+            ]
+          }
+        },
+        "recommend": {
+          "serviceSlugs": [
+            "process-optimization-audit-kpi",
+            "automation-rpa-crm-erp"
+          ],
+          "caseSlugs": [
+            "retail-returns-cycle-reduction"
+          ],
+          "aiScenario": "roi"
+        }
+      },
+      {
+        "name": "industry_ecommerce",
+        "conditions": {
+          "description": "Если отрасль — e-commerce (важны единые метрики и скорость решений)"
+        },
+        "match": {
+          "anyOf": {
+            "field": "industry",
+            "values": [
+              "ecommerce"
+            ]
+          }
+        },
+        "recommend": {
+          "serviceSlugs": [
+            "data-analytics-platform-bi",
+            "automation-rpa-crm-erp"
+          ],
+          "caseSlugs": [
+            "ecommerce-single-source-of-truth"
+          ],
+          "aiScenario": "roi"
+        }
+      },
+      {
+        "name": "industry_fintech",
+        "conditions": {
+          "description": "Если отрасль — финтех/банки (критичны ИБ, ПДн и устойчивость)"
+        },
+        "match": {
+          "anyOf": {
+            "field": "industry",
+            "values": [
+              "fintech"
+            ]
+          }
+        },
+        "recommend": {
+          "serviceSlugs": [
+            "cybersecurity-audit-protection",
+            "cloud-devops-ci-cd-platform"
+          ],
+          "caseSlugs": [
+            "fintech-security-regulator-remediation"
+          ],
+          "aiScenario": "faq"
+        }
+      },
+      {
+        "name": "industry_manufacturing",
+        "conditions": {
+          "description": "Если отрасль — производство (важны простои, безопасность OT и мониторинг)"
+        },
+        "match": {
+          "anyOf": {
+            "field": "industry",
+            "values": [
+              "manufacturing"
+            ]
+          }
+        },
+        "recommend": {
+          "serviceSlugs": [
+            "iot-digital-twins-pilot-platform",
+            "data-analytics-platform-bi"
+          ],
+          "caseSlugs": [
+            "manufacturing-iot-downtime-reduction"
+          ],
+          "aiScenario": "roi"
+        }
+      },
+      {
+        "name": "industry_logistics",
+        "conditions": {
+          "description": "Если отрасль — логистика (часто болят интеграции и скорость обработки)"
+        },
+        "match": {
+          "anyOf": {
+            "field": "industry",
+            "values": [
+              "logistics"
+            ]
+          }
+        },
+        "recommend": {
+          "serviceSlugs": [
+            "automation-rpa-crm-erp",
+            "data-analytics-platform-bi"
+          ],
+          "caseSlugs": [
+            "logistics-crm-erp-wms-automation"
+          ],
+          "aiScenario": "audit"
+        }
+      },
+      {
+        "name": "industry_medtech",
+        "conditions": {
+          "description": "Если отрасль — медтех (нагрузка на поддержку и требования по данным)"
+        },
+        "match": {
+          "anyOf": {
+            "field": "industry",
+            "values": [
+              "medtech"
+            ]
+          }
+        },
+        "recommend": {
+          "serviceSlugs": [
+            "ai-integration-use-cases-mlops",
+            "cybersecurity-audit-protection"
+          ],
+          "caseSlugs": [
+            "medtech-support-ai-triage"
+          ],
+          "aiScenario": "use-cases"
+        }
+      },
+      {
+        "name": "industry_saas",
+        "conditions": {
+          "description": "Если отрасль — SaaS/IT‑продукт (важны частые релизы и стабильность)"
+        },
+        "match": {
+          "anyOf": {
+            "field": "industry",
+            "values": [
+              "saas"
+            ]
+          }
+        },
+        "recommend": {
+          "serviceSlugs": [
+            "cloud-devops-ci-cd-platform",
+            "data-analytics-platform-bi"
+          ],
+          "caseSlugs": [
+            "saas-devops-weekly-zero-downtime-releases"
+          ],
+          "aiScenario": "roi"
+        }
+      },
+      {
+        "name": "goal_speed_up_cycle",
+        "conditions": {
+          "description": "Если цель — ускорить цикл и убрать задержки"
+        },
+        "match": {
+          "anyOf": {
+            "field": "goal",
+            "values": [
+              "speed_up_cycle"
+            ]
+          }
+        },
+        "recommend": {
+          "serviceSlugs": [
+            "process-optimization-audit-kpi",
+            "automation-rpa-crm-erp"
+          ],
+          "caseSlugs": [
+            "retail-returns-cycle-reduction"
+          ],
+          "aiScenario": "roi"
+        }
+      },
+      {
+        "name": "goal_increase_revenue",
+        "conditions": {
+          "description": "Если цель — увеличить выручку через скорость и управляемость"
+        },
+        "match": {
+          "anyOf": {
+            "field": "goal",
+            "values": [
+              "increase_revenue"
+            ]
+          }
+        },
+        "recommend": {
+          "serviceSlugs": [
+            "cloud-devops-ci-cd-platform",
+            "data-analytics-platform-bi"
+          ],
+          "caseSlugs": [
+            "saas-devops-weekly-zero-downtime-releases"
+          ],
+          "aiScenario": "roi"
+        }
+      },
+      {
+        "name": "goal_improve_quality",
+        "conditions": {
+          "description": "Если цель — повысить качество и стабильность SLA"
+        },
+        "match": {
+          "anyOf": {
+            "field": "goal",
+            "values": [
+              "improve_quality"
+            ]
+          }
+        },
+        "recommend": {
+          "serviceSlugs": [
+            "process-optimization-audit-kpi",
+            "cloud-devops-ci-cd-platform"
+          ],
+          "caseSlugs": [
+            "saas-devops-weekly-zero-downtime-releases"
+          ],
+          "aiScenario": "faq"
+        }
+      },
+      {
+        "name": "role_cto",
+        "conditions": {
+          "description": "Если роль — CTO/IT‑директор (важны архитектура, безопасность, поддерживаемость)"
+        },
+        "match": {
+          "anyOf": {
+            "field": "role",
+            "values": [
+              "cto_it_director"
+            ]
+          }
+        },
+        "recommend": {
+          "serviceSlugs": [
+            "cloud-devops-ci-cd-platform",
+            "cybersecurity-audit-protection"
+          ],
+          "caseSlugs": [
+            "saas-devops-weekly-zero-downtime-releases"
+          ],
+          "aiScenario": "faq"
+        }
+      },
+      {
+        "name": "role_coo",
+        "conditions": {
+          "description": "Если роль — COO/операционный (важны цикл, качество и стабильность процессов)"
+        },
+        "match": {
+          "anyOf": {
+            "field": "role",
+            "values": [
+              "coo_operations"
+            ]
+          }
+        },
+        "recommend": {
+          "serviceSlugs": [
+            "process-optimization-audit-kpi",
+            "automation-rpa-crm-erp"
+          ],
+          "caseSlugs": [
+            "retail-returns-cycle-reduction",
+            "logistics-crm-erp-wms-automation"
+          ],
+          "aiScenario": "roi"
+        }
+      },
+      {
+        "name": "role_pm_analyst",
+        "conditions": {
+          "description": "Если роль — PM/аналитик (нужны кейсы, требования и быстрые гипотезы)"
+        },
+        "match": {
+          "anyOf": {
+            "field": "role",
+            "values": [
+              "pm_analyst"
+            ]
+          }
+        },
+        "recommend": {
+          "serviceSlugs": [
+            "data-analytics-platform-bi",
+            "ai-integration-use-cases-mlops"
+          ],
+          "caseSlugs": [
+            "ecommerce-single-source-of-truth",
+            "medtech-support-ai-triage"
+          ],
+          "aiScenario": "use-cases"
+        }
+      }
+    ]
+  },
+  "result": {
+    "headline": "Рекомендации под вашу задачу",
+    "description": "Мы подобрали услуги, кейс и AI‑демо на основе ваших ответов.",
+    "sections": [
+      {
+        "type": "recommended_services",
+        "title": "Подходящие услуги",
+        "emptyState": "Не нашли точного совпадения — покажем все направления."
+      },
+      {
+        "type": "relevant_case",
+        "title": "Похожий кейс",
+        "emptyState": "Нет кейса один в один — покажем ближайший по логике."
+      },
+      {
+        "type": "ai_demo",
+        "title": "Попробовать AI‑демо",
+        "description": "За 2 минуты оцените эффект и следующий шаг."
+      },
+      {
+        "type": "cta_lead",
+        "title": "Обсудить внедрение",
+        "buttonText": "Оставить заявку",
+        "description": "Уточним вводные и предложим план пилота, сроки и бюджет."
+      }
+    ],
+    "skipText": "Смотреть всё без фильтра"
+  },
+  "settings": {
+    "allowSkip": true,
+    "skipAfterStep": 2,
+    "skipText": "Смотреть всё сразу",
+    "progressType": "dots",
+    "animationBetweenSteps": "slide-left"
+  }
+}

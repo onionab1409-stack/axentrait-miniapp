@@ -1,0 +1,23 @@
+:root {
+  --tg-bg: unset;
+  --tg-text: unset;
+  --tg-hint: unset;
+  --tg-link: unset;
+  --tg-button: unset;
+  --tg-button-text: unset;
+  --tg-secondary-bg: unset;
+}
+
+:root {
+  --app-bg: var(--tg-bg, var(--ax-surface-0));
+  --app-card: var(--tg-secondary-bg, var(--ax-surface-1));
+  --app-card-2: var(--ax-surface-2);
+  --app-text: var(--tg-text, var(--ax-text-1));
+  --app-text-2: var(--ax-text-2);
+  --app-text-3: var(--ax-text-3);
+  --app-text-muted: var(--tg-hint, var(--ax-text-3));
+  --app-link: var(--tg-link, var(--ax-primary-500));
+  --app-accent: var(--tg-button, var(--ax-primary-500));
+  --app-accent-text: var(--tg-button-text, #ffffff);
+  --app-border: var(--ax-border);
+}

@@ -1,0 +1,45 @@
+{
+  "sourceNote": "scenarioMeta extracted from ai-prompts_json.txt; prompts block in source contains invalid embedded JSON examples",
+  "scenarioMeta": [
+    {
+      "key": "ai.scenario.audit",
+      "displayName": "Аудит процесса",
+      "displayDescription": "Рекомендации, риски и план действий",
+      "icon": "🧾",
+      "estimatedTime": "2-3 минуты",
+      "requiredInputHint": "Опишите процесс: шаги, системы, объём, что болит",
+      "outputFormat": "json",
+      "maxTurns": 7
+    },
+    {
+      "key": "ai.scenario.usecase_finder",
+      "displayName": "Поиск AI-кейсов",
+      "displayDescription": "Подберём 3–6 AI‑сценариев с эффектом и сложностью для пилота",
+      "icon": "🤖",
+      "estimatedTime": "3-4 минуты",
+      "requiredInputHint": "Коротко: отрасль, процессы, где данные и какая боль",
+      "outputFormat": "json",
+      "maxTurns": 7
+    },
+    {
+      "key": "ai.scenario.roi",
+      "displayName": "Расчёт ROI",
+      "displayDescription": "Оценим экономию в рублях и окупаемость по вашим вводным",
+      "icon": "💰",
+      "estimatedTime": "3-5 минут",
+      "requiredInputHint": "Какая задача? Сколько людей/часов/ошибок сейчас",
+      "outputFormat": "text",
+      "maxTurns": 9
+    },
+    {
+      "key": "ai.scenario.faq",
+      "displayName": "Вопросы по услугам",
+      "displayDescription": "Цены, сроки, пакеты и как работаем — коротко и по делу",
+      "icon": "❓",
+      "estimatedTime": "1-2 минуты",
+      "requiredInputHint": "Спросите про услугу, сроки, пакеты или стоимость",
+      "outputFormat": "text",
+      "maxTurns": 10
+    }
+  ]
+}

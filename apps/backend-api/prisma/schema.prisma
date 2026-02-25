@@ -1,0 +1,318 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// A) Users
+model User {
+  id              String   @id @default(uuid()) @db.Uuid
+  telegramUserId  BigInt   @unique @map("telegram_user_id") @db.BigInt
+  firstName       String?  @map("first_name")
+  lastName        String?  @map("last_name")
+  username        String?
+  languageCode    String?  @map("language_code")
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt       DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+  profile              UserProfile?
+  leads                Lead[]
+  aiSessions           AiSession[]
+  bookingReservations  BookingReservation[]
+  referrals            Referral[]
+  refreshTokens        RefreshToken[]
+  onboardingAnswers    OnboardingAnswer[]
+  analyticsEvents      AnalyticsEvent[]
+
+  @@map("users")
+}
+
+model UserProfile {
+  userId      String   @id @map("user_id") @db.Uuid
+  user        User     @relation(fields: [userId], references: [id])
+  role        String?
+  industry    String?
+  companySize String?  @map("company_size")
+  painArea    String?  @map("pain_area")
+  goal        String?
+  budgetRange String?  @map("budget_range")
+  timeline    String?
+  segments    String[] @default([])
+  updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+  @@map("user_profile")
+}
+
+// B) Content
+model ServiceCategory {
+  id          String   @id @default(uuid()) @db.Uuid
+  slug        String   @unique
+  title       String
+  description String?
+  icon        String?
+  sortOrder   Int      @default(0) @map("sort_order")
+  isActive    Boolean  @default(true) @map("is_active")
+  updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+  services    Service[]
+
+  @@map("service_categories")
+}
+
+model Service {
+  id               String            @id @default(uuid()) @db.Uuid
+  categoryId       String?           @map("category_id") @db.Uuid
+  category         ServiceCategory?  @relation(fields: [categoryId], references: [id])
+  slug             String            @unique
+  title            String
+  shortPitch       String?           @map("short_pitch")
+  longDescription  String?           @map("long_description")
+  deliverables     Json?             @db.JsonB
+  prerequisites    Json?             @db.JsonB
+  typicalTimeline  String?           @map("typical_timeline")
+  startingPrice    Decimal?          @map("starting_price") @db.Decimal(14, 2)
+  tags             String[]          @default([])
+  isActive         Boolean           @default(true) @map("is_active")
+  updatedAt        DateTime          @updatedAt @map("updated_at") @db.Timestamptz()
+
+  packages         Package[]
+  caseLinks        ServiceCaseLink[]
+
+  @@index([categoryId])
+  @@map("services")
+}
+
+model Package {
+  id          String   @id @default(uuid()) @db.Uuid
+  serviceId   String   @map("service_id") @db.Uuid
+  service     Service  @relation(fields: [serviceId], references: [id])
+  name        String
+  priceMin    Decimal? @map("price_min") @db.Decimal(14, 2)
+  priceMax    Decimal? @map("price_max") @db.Decimal(14, 2)
+  includes    Json?    @db.JsonB
+  excludes    Json?    @db.JsonB
+  idealFor    String?  @map("ideal_for")
+  sortOrder   Int      @default(0) @map("sort_order")
+  updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+  @@map("packages")
+}
+
+model CaseStudy {
+  id           String   @id @default(uuid()) @db.Uuid
+  slug         String   @unique
+  title        String
+  industry     String?
+  problem      String?
+  approach     String?
+  solution     String?
+  stack        String[] @default([])
+  timeline     String?
+  metrics      Json?    @db.JsonB
+  assets       Json?    @db.JsonB
+  tags         String[] @default([])
+  isActive     Boolean  @default(true) @map("is_active")
+  updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+  serviceLinks ServiceCaseLink[]
+
+  @@index([industry])
+  @@map("case_studies")
+}
+
+model ServiceCaseLink {
+  serviceId String    @map("service_id") @db.Uuid
+  caseId    String    @map("case_id") @db.Uuid
+  service   Service   @relation(fields: [serviceId], references: [id])
+  caseStudy CaseStudy @relation(fields: [caseId], references: [id])
+
+  @@id([serviceId, caseId])
+  @@map("service_case_links")
+}
+
+// C) Leads
+model Lead {
+  id                     String   @id @default(uuid()) @db.Uuid
+  userId                 String   @map("user_id") @db.Uuid
+  user                   User     @relation(fields: [userId], references: [id])
+  companyName            String?  @map("company_name")
+  contactEmail           String?  @map("contact_email")
+  contactPhone           String?  @map("contact_phone")
+  preferredContactMethod String   @default("telegram") @map("preferred_contact_method")
+  problemStatement       String   @map("problem_statement")
+  serviceInterest        String[] @default([]) @map("service_interest")
+  status                 String   @default("new")
+  source                 String   @default("miniapp")
+  createdAt              DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt              DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+  events                 LeadEvent[]
+  bookingReservation     BookingReservation?
+
+  @@index([userId])
+  @@index([status])
+  @@map("leads")
+}
+
+model LeadEvent {
+  id        String   @id @default(uuid()) @db.Uuid
+  leadId    String   @map("lead_id") @db.Uuid
+  lead      Lead     @relation(fields: [leadId], references: [id])
+  type      String
+  payload   Json?    @db.JsonB
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  @@index([leadId])
+  @@map("lead_events")
+}
+
+// D) Booking
+model BookingSlot {
+  id            String   @id @default(uuid()) @db.Uuid
+  startsAt      DateTime @map("starts_at") @db.Timestamptz()
+  endsAt        DateTime @map("ends_at") @db.Timestamptz()
+  capacity      Int      @default(1)
+  reservedCount Int      @default(0) @map("reserved_count")
+  isActive      Boolean  @default(true) @map("is_active")
+
+  reservations  BookingReservation[]
+
+  @@index([startsAt])
+  @@map("booking_slots")
+}
+
+model BookingReservation {
+  id              String      @id @default(uuid()) @db.Uuid
+  slotId          String      @map("slot_id") @db.Uuid
+  slot            BookingSlot @relation(fields: [slotId], references: [id])
+  userId          String      @map("user_id") @db.Uuid
+  user            User        @relation(fields: [userId], references: [id])
+  leadId          String?     @unique @map("lead_id") @db.Uuid
+  lead            Lead?       @relation(fields: [leadId], references: [id])
+  status          String      @default("reserved")
+  idempotencyKey  String      @unique @map("idempotency_key")
+  createdAt       DateTime    @default(now()) @map("created_at") @db.Timestamptz()
+
+  @@index([userId])
+  @@map("booking_reservations")
+}
+
+// E) AI
+model AiSession {
+  id         String   @id @default(uuid()) @db.Uuid
+  userId     String   @map("user_id") @db.Uuid
+  user       User     @relation(fields: [userId], references: [id])
+  mode       String   // "scenario" | "free"
+  scenarioId String?  @map("scenario_id")
+  title      String?
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt  DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+  messages   AiMessage[]
+
+  @@index([userId])
+  @@map("ai_sessions")
+}
+
+model AiMessage {
+  id         String    @id @default(uuid()) @db.Uuid
+  sessionId  String    @map("session_id") @db.Uuid
+  session    AiSession @relation(fields: [sessionId], references: [id])
+  role       String    // "user" | "assistant" | "system"
+  content    String
+  tokensIn   Int?      @map("tokens_in")
+  tokensOut  Int?      @map("tokens_out")
+  provider   String?
+  model      String?
+  createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+
+  @@index([sessionId])
+  @@map("ai_messages")
+}
+
+model PromptTemplate {
+  id          String   @id @default(uuid()) @db.Uuid
+  key         String   @unique
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  versions    PromptVersion[]
+
+  @@map("prompt_templates")
+}
+
+model PromptVersion {
+  id          String         @id @default(uuid()) @db.Uuid
+  templateId  String         @map("template_id") @db.Uuid
+  template    PromptTemplate @relation(fields: [templateId], references: [id])
+  version     Int
+  content     String
+  isActive    Boolean        @default(false) @map("is_active")
+  createdAt   DateTime       @default(now()) @map("created_at") @db.Timestamptz()
+
+  @@unique([templateId, version])
+  @@map("prompt_versions")
+}
+
+// G) Referrals
+model Referral {
+  id              String   @id @default(uuid()) @db.Uuid
+  referrerUserId  String   @map("referrer_user_id") @db.Uuid
+  referrer        User     @relation(fields: [referrerUserId], references: [id])
+  code            String   @unique
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  @@map("referrals")
+}
+
+// Additional technical tables.
+model RefreshToken {
+  id         String   @id @default(uuid()) @db.Uuid
+  userId     String   @map("user_id") @db.Uuid
+  user       User     @relation(fields: [userId], references: [id])
+  tokenId    String   @unique @map("token_id")
+  tokenHash  String   @map("token_hash")
+  expiresAt  DateTime @map("expires_at") @db.Timestamptz()
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  @@index([userId])
+  @@map("refresh_tokens")
+}
+
+model OnboardingAnswer {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  user      User     @relation(fields: [userId], references: [id])
+  answers   Json     @db.JsonB
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  @@index([userId])
+  @@map("onboarding_answers")
+}
+
+model OnboardingConfig {
+  id        String   @id @default(uuid()) @db.Uuid
+  key       String   @unique
+  content   Json     @db.JsonB
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+  @@map("onboarding_configs")
+}
+
+model AnalyticsEvent {
+  id         String   @id @default(uuid()) @db.Uuid
+  userId     String?  @map("user_id") @db.Uuid
+  user       User?    @relation(fields: [userId], references: [id])
+  name       String
+  properties Json?    @db.JsonB
+  timestamp  DateTime @default(now()) @db.Timestamptz()
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  @@index([name])
+  @@index([timestamp])
+  @@map("analytics_events")
+}

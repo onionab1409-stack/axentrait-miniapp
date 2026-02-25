@@ -1,0 +1,32 @@
+.h1 {
+  font-size: var(--ax-text-3xl);
+  line-height: var(--ax-lh-tight);
+  font-weight: 700;
+  color: var(--app-text);
+  margin: 0;
+}
+
+.h2 {
+  font-size: var(--ax-text-2xl);
+  line-height: var(--ax-lh-snug);
+  font-weight: 700;
+  color: var(--app-text);
+  margin: 0;
+}
+
+.p {
+  font-size: var(--ax-text-md);
+  line-height: var(--ax-lh-base);
+  font-weight: 400;
+  color: var(--app-text);
+  margin: 0;
+}
+
+.muted {
+  color: var(--app-text-muted);
+}
+
+.metric {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}

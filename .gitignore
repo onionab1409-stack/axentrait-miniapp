@@ -1,0 +1,55 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+*.tsbuildinfo
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Backups
+*.bak*
+*.backup*
+.bak-*
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+._*
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Certbot / SSL (managed on server)
+certbot/
+
+# Docker volumes (runtime data)
+pgdata/
+
+# Lock file (regenerated from package.json)
+pnpm-lock.yaml
+
+# Database backups
+backups/
+
+# Diagnostic / temp reports
+diagnostic-report.txt
+*-diagnostic*.txt
+
+# Smoke test artifacts (screenshots, reports)
+smoke/*.png
+smoke/report.json
+
+# Playwright test results
+test-results/
