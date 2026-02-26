@@ -1,15 +1,15 @@
-import { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { AppShell } from '../../components/layout/AppShell';
+import { useCallback, useEffect } from 'react';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { Button } from '../../components/ui/Button';
-import { Chip } from '../../components/ui/Chip';
 import { MjImage } from '../../components/ui/MjImage';
 import { Skeleton } from '../../components/ui/Skeleton';
 import { ErrorState } from '../../components/ui/ErrorState';
+import { AppShell } from '../../components/layout/AppShell';
 import { BottomNav } from '../../components/layout/BottomNav';
 import { ToastHost } from '../../components/ui/ToastHost';
 import { serviceImageBySlug } from '../../shared/data';
 import { track } from '../../shared/analytics/track';
+import { useTgBackButton } from '../../shared/telegram/useTgBackButton';
 import { useService } from './hooks/useService';
 
 function formatPrice(value?: string | null): string | null {
@@ -21,10 +21,18 @@ function formatPrice(value?: string | null): string | null {
 
 export default function ServiceDetailPage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { id = '' } = useParams();
 
   const serviceQuery = useService(id);
   const service = serviceQuery.data;
+
+  /* Telegram Back Button */
+  const goBack = useCallback(() => {
+    if (location.key === 'default') navigate('/services');
+    else navigate(-1);
+  }, [location.key, navigate]);
+  useTgBackButton(true, goBack);
 
   useEffect(() => {
     if (id) track('service_opened', { service_id: id, screen_id: 'SCR-SVC-020' });
@@ -55,6 +63,12 @@ export default function ServiceDetailPage() {
     );
   }
 
+  /* H24 FIX: only first paragraph of longDescription */
+  const firstParagraph = (service.longDescription || '')
+    .split('\n\n')
+    .map((p) => p.trim())
+    .find((p) => p.length > 0) ?? '';
+
   return (
     <div style={{ position: 'fixed', inset: 0, display: 'flex', flexDirection: 'column' }}>
       {/* Fullscreen background */}
@@ -69,7 +83,7 @@ export default function ServiceDetailPage() {
         />
       </div>
 
-      {/* Content */}
+      {/* H23 FIX: content pinned to bottom with flex-end */}
       <div style={{
         position: 'relative', zIndex: 1, height: '100%',
         display: 'flex', flexDirection: 'column',
@@ -77,8 +91,9 @@ export default function ServiceDetailPage() {
         padding: '64px 20px 80px',
         overflowY: 'auto',
       }}>
+        {/* H1: 22px/700/white — Service is the exception (not cyan/300) */}
         <h1 style={{
-          fontSize: 26,
+          fontSize: 22,
           fontWeight: 700,
           color: '#F0F6FC',
           lineHeight: 1.2,
@@ -88,9 +103,10 @@ export default function ServiceDetailPage() {
           {service.title}
         </h1>
 
+        {/* Subtitle: 13px, slightly muted */}
         <p style={{
-          fontSize: 14,
-          color: 'rgba(240,246,252,0.6)',
+          fontSize: 13,
+          color: 'rgba(240,246,252,0.5)',
           lineHeight: 1.5,
           margin: 0,
           marginBottom: 16,
@@ -98,28 +114,42 @@ export default function ServiceDetailPage() {
           {service.shortPitch}
         </p>
 
+        {/* H25 FIX: Chips white (#F0F6FC), not teal */}
         <div style={{ display: 'flex', gap: 8, marginBottom: 20, flexWrap: 'wrap' }}>
-          <Chip>{timeline}</Chip>
-          {price ? <Chip>от {price}</Chip> : null}
+          <span style={{
+            display: 'inline-flex', alignItems: 'center',
+            fontSize: 12, padding: '5px 12px', borderRadius: 8,
+            color: '#F0F6FC', background: 'rgba(255,255,255,0.1)',
+            backdropFilter: 'blur(4px)', WebkitBackdropFilter: 'blur(4px)',
+          }}>
+            {timeline}
+          </span>
+          {price ? (
+            <span style={{
+              display: 'inline-flex', alignItems: 'center',
+              fontSize: 12, padding: '5px 12px', borderRadius: 8,
+              color: '#F0F6FC', background: 'rgba(255,255,255,0.1)',
+              backdropFilter: 'blur(4px)', WebkitBackdropFilter: 'blur(4px)',
+            }}>
+              от {price}
+            </span>
+          ) : null}
         </div>
 
-        {(service.longDescription || '').split('\n\n')
-          .filter((paragraph) => paragraph.trim().length > 0)
-          .map((paragraph, i) => (
-            <p
-              key={`${service.slug}_paragraph_${i}`}
-              style={{
-                fontSize: 14,
-                lineHeight: 1.6,
-                fontWeight: 300,
-                color: 'rgba(240,246,252,0.72)',
-                margin: i === 0 ? '0 0 12px' : '0 0 12px',
-              }}
-            >
-              {paragraph}
-            </p>
-          ))}
+        {/* H24 FIX: single paragraph only */}
+        {firstParagraph ? (
+          <p style={{
+            fontSize: 14,
+            lineHeight: 1.6,
+            fontWeight: 300,
+            color: 'rgba(240,246,252,0.65)',
+            margin: '0 0 16px',
+          }}>
+            {firstParagraph}
+          </p>
+        ) : null}
 
+        {/* Primary button — solid gradient (conversion CTA, unchanged) */}
         <Button
           variant="primary"
           size="lg"
@@ -141,15 +171,23 @@ export default function ServiceDetailPage() {
           Оставить заявку
         </Button>
 
-        <Button
-          variant="glassPrimary"
-          size="lg"
-          fullWidth
-          onClick={() => navigate('/services')}
-          style={{ marginBottom: 12 }}
-        >
-          Все услуги
-        </Button>
+        {/* H26 FIX: compact secondary button, not fullWidth */}
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Button
+            variant="secondary"
+            onClick={() => navigate('/services')}
+            style={{
+              fontSize: 13,
+              fontWeight: 500,
+              borderRadius: 12,
+              borderColor: 'rgba(34,211,238,0.3)',
+              padding: '11px 22px',
+              minHeight: 'auto',
+            }}
+          >
+            Все услуги
+          </Button>
+        </div>
       </div>
 
       <BottomNav />
