@@ -76,26 +76,25 @@ export default function WelcomePage() {
         />
       </div>
 
-      {/* Content overlay */}
+      {/* H1 FIX: space-between layout pushes headline to top, buttons to bottom */}
       <div
         style={{
           position: 'relative',
           zIndex: 1,
           display: 'flex',
           flexDirection: 'column',
+          justifyContent: 'space-between',
           height: '100%',
           padding: '0 24px',
         }}
       >
-        {/* Headline in upper third */}
+        {/* Headline in upper area (~20% from top) */}
         <div
           style={{
-            flex: 1,
             display: 'flex',
-            alignItems: 'center',
+            alignItems: 'flex-start',
             justifyContent: 'center',
-            paddingTop: 60,
-            paddingBottom: 20,
+            paddingTop: 'calc(58px + 7vh)',
           }}
         >
           <h1
@@ -124,8 +123,9 @@ export default function WelcomePage() {
             paddingBottom: 48,
           }}
         >
+          {/* H2 FIX: reduced padding for slimmer button */}
           <Button variant="glassPrimary" size="lg" fullWidth onClick={startOnboarding}
-            style={{ padding: '15px 0', fontSize: 15 }}>
+            style={{ padding: '12px 0', fontSize: 15, minHeight: 48 }}>
             {welcome.ctaButton}
           </Button>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
