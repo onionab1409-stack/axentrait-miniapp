@@ -382,7 +382,7 @@ select {
 .splash-logo-fallback::after {
   content: 'AX';
   font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
-  font-size: 38px;
+  font-size: 34px;
   font-weight: 700;
   color: #22d3ee;
   text-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
@@ -517,7 +517,7 @@ body {
   background: radial-gradient(120% 90% at 10% 5%, rgba(47, 107, 255, 0.22), transparent 48%),
     radial-gradient(90% 70% at 100% 0%, rgba(34, 211, 238, 0.2), transparent 40%), var(--ax-bg);
   color: var(--ax-text-primary);
-  font-family: system-ui, -apple-system, 'SF Pro Text', Inter, Roboto, sans-serif;
+  font-family: var(--ax-font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

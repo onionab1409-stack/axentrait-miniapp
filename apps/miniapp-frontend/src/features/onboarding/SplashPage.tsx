@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '../../components/ui/Button';
 import { MjImage } from '../../components/ui/MjImage';
 import { track } from '../../shared/analytics/track';
 import { SplashRive } from './SplashRive';
@@ -15,7 +14,15 @@ export default function SplashPage() {
   }, [navigate]);
 
   return (
-    <main className="ax-shell" style={{ justifyContent: 'space-between', position: 'relative', overflow: 'hidden' }}>
+    <div style={{
+      position: 'fixed',
+      inset: 0,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      overflow: 'hidden',
+    }}>
       <MjImage
         id="splash-bg"
         scrim={false}
@@ -24,20 +31,19 @@ export default function SplashPage() {
         style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0.36 }}
       />
 
-      <div className="ax-row" style={{ justifyContent: 'flex-end', zIndex: 1 }}>
-        <Button variant="ghost" onClick={() => navigate('/welcome')}>
-          Пропустить
-        </Button>
-      </div>
-
-      <section className="ax-col" style={{ alignItems: 'center', justifyContent: 'center', minHeight: '60dvh', gap: 20, zIndex: 1 }}>
+      <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <SplashRive />
-        <p className="p muted">Automation · AI · Optimization</p>
-      </section>
-
-      <div className="ax-col" style={{ gap: 6, textAlign: 'center', zIndex: 1 }}>
-        <span className="ax-muted">Загрузка Mini App shell...</span>
+        <p style={{
+          fontSize: 12,
+          color: 'rgba(240,246,252,0.35)',
+          letterSpacing: '3px',
+          fontFamily: "'SF Mono', Consolas, monospace",
+          margin: 0,
+          marginTop: 16,
+        }}>
+          Automation · AI · Optimization
+        </p>
       </div>
-    </main>
+    </div>
   );
 }
