@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { Diamond, Grid3X3, Play, User } from 'lucide-react';
+import { Diamond, Grid3X3, Play } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const DiamondFilled = ({ size = 16, ...props }: { size?: number; [key: string]: any }) => (
@@ -13,7 +13,6 @@ const items = [
   { key: 'cases',    label: 'Кейсы',   icon: Grid3X3,       to: '/cases' },
   { key: 'ai',       label: 'AI-демо', icon: DiamondFilled, to: '/ai' },
   { key: 'lead',     label: 'Заявка',  icon: Play,          to: '/lead' },
-  { key: 'account',  label: 'Профиль', icon: User,          to: '/account' },
 ];
 
 const navStyle: CSSProperties = {
@@ -27,7 +26,7 @@ const navStyle: CSSProperties = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-around',
-  background: 'linear-gradient(180deg, rgba(5, 10, 15, 0.85), rgba(5, 10, 15, 0.98))',
+  background: 'rgba(5, 10, 15, 0.7)',
   backdropFilter: 'blur(20px)',
   WebkitBackdropFilter: 'blur(20px)',
   borderTop: '1px solid rgba(255, 255, 255, 0.06)',
@@ -41,7 +40,7 @@ const activeTabStyle: CSSProperties = {
 };
 
 const inactiveTabStyle: CSSProperties = {
-  color: 'rgba(240, 246, 252, 0.38)',
+  color: 'rgba(240, 246, 252, 0.35)',
 };
 
 export function BottomNav() {
@@ -70,7 +69,7 @@ export function BottomNav() {
               minWidth: 56,
               minHeight: 56,
               gap: 2,
-              fontSize: 11,
+              fontSize: 10,
               ...(active ? activeTabStyle : inactiveTabStyle),
             }}
           >
