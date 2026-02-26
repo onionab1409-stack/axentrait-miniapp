@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { AppShell } from '../../components/layout/AppShell';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
+import { MjImage } from '../../components/ui/MjImage';
 import { trackEvent } from '../../shared/analytics/trackEvent';
 import { fetchOnboardingConfig, submitOnboardingAnswers } from '../../shared/api/onboardingApi';
 import { tgHapticLight } from '../../shared/telegram/tg';
@@ -14,19 +15,18 @@ import { useOnboardingState } from './useOnboardingState';
 
 function optionStyle(isSelected: boolean): React.CSSProperties {
   return {
-    display: 'flex',
+    display: 'inline-flex',
     alignItems: 'center',
-    gap: 12,
-    width: '100%',
-    padding: '14px 16px',
+    gap: 10,
+    padding: '10px 14px',
     borderRadius: 14,
-    background: isSelected ? 'rgba(34, 211, 238, 0.06)' : 'rgba(255, 255, 255, 0.02)',
-    border: `1px solid ${isSelected ? 'rgba(34, 211, 238, 0.25)' : 'rgba(255, 255, 255, 0.06)'}`,
+    background: isSelected ? 'rgba(34,211,238,0.06)' : 'rgba(0,0,0,0.18)',
+    backdropFilter: 'blur(10px)',
+    WebkitBackdropFilter: 'blur(10px)',
+    border: 'none',
     cursor: 'pointer',
-    transition: 'all 200ms ease',
-    marginBottom: 8,
+    transition: 'all 150ms ease',
     textAlign: 'left',
-    color: 'var(--app-text)',
   };
 }
 
@@ -145,25 +145,55 @@ export default function SurveyPage() {
   }
 
   return (
-    <AppShell title="Подбор решения" showBack onBack={back}>
-      <Card>
-        <div className="ax-col ax-step-slide-left" style={{ gap: 12 }}>
-          <div className="ax-row" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
-            <div className="ax-dots" aria-label="progress dots">
+    <div style={{ position: 'fixed', inset: 0, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+      {/* Fullscreen background */}
+      <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+        <MjImage id="survey-bg" height="100%" borderRadius={0} scrim={false} alt="Survey bg" />
+      </div>
+
+      {/* Content overlay */}
+      <div style={{
+        position: 'relative', zIndex: 1,
+        height: '100%', display: 'flex', flexDirection: 'column',
+        padding: '64px 20px 20px',
+        overflowY: 'auto',
+      }}>
+        <div className="ax-step-slide-left" style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+          {/* Dots + counter */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+            <div className="ax-dots" style={{ gap: 6 }} aria-label="progress dots">
               {Array.from({ length: questions.length }).map((_, i) => {
                 const stateClass = i < safeStep ? 'active' : i === safeStep ? 'current' : '';
                 return <span key={`dot_${i}`} className={`ax-dot ${stateClass}`.trim()} />;
               })}
             </div>
-            <span className="ax-muted" style={{ fontSize: 12 }}>
+            <span style={{ fontSize: 12, color: 'rgba(126,232,242,0.4)' }}>
               {safeStep + 1}/{questions.length}
             </span>
           </div>
 
-          <h1 className="h2">{currentQuestion.title}</h1>
-          <p className="p muted">{currentQuestion.subtitle}</p>
+          {/* Title */}
+          <h2 style={{
+            fontSize: 26,
+            fontWeight: 300,
+            color: '#7EE8F2',
+            letterSpacing: '0.5px',
+            textShadow: '0 0 30px rgba(34,211,238,0.2)',
+            margin: 0,
+            marginBottom: 16,
+          }}>
+            {currentQuestion.title}
+          </h2>
 
-          <div className="ax-col" style={{ gap: 8 }}>
+          {/* Options */}
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            gap: 10,
+            flex: 1,
+            padding: '10px 0',
+          }}>
             {currentQuestion.options.map((option) => {
               const isSelected = selected === option.value;
 
@@ -177,30 +207,34 @@ export default function SurveyPage() {
                     if (questionKey) setAnswer(questionKey, option.value);
                   }}
                 >
-                  <span style={{ fontSize: 18, lineHeight: 1 }}>{option.icon}</span>
-                  <span style={{ flex: 1, minWidth: 0 }}>
-                    <span style={{ display: 'block', fontSize: 14, fontWeight: 600 }}>{option.label}</span>
-                    {option.description ? <span className="option-hint">{option.description}</span> : null}
+                  <span style={{ fontSize: 22, lineHeight: 1 }}>{option.icon}</span>
+                  <span style={{
+                    fontSize: 14,
+                    fontWeight: 600,
+                    color: 'rgba(126,232,242,0.55)',
+                  }}>
+                    {option.label}
                   </span>
                 </button>
               );
             })}
           </div>
 
+          {/* Action button */}
           <Button
-            variant="primary"
+            variant="glassPrimary"
             size="lg"
             fullWidth
             disabled={!canContinue}
             onClick={() => {
               void next();
             }}
-            style={{ marginTop: 20 }}
+            style={{ marginTop: 16, padding: '15px 0', fontSize: 15 }}
           >
             {actionLabel}
           </Button>
         </div>
-      </Card>
-    </AppShell>
+      </div>
+    </div>
   );
 }

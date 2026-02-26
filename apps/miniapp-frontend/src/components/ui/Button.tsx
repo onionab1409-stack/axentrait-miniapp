@@ -1,6 +1,6 @@
 import type { ButtonHTMLAttributes, PropsWithChildren, ReactNode } from 'react';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'accent' | 'destructive';
+export type ButtonVariant = 'primary' | 'glassPrimary' | 'glassPrimaryMuted' | 'secondary' | 'ghost' | 'accent' | 'destructive';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 type NativeButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'>;
@@ -24,6 +24,18 @@ const styles: Record<Exclude<ButtonVariant, 'destructive'>, React.CSSProperties>
     color: '#050A0F',
     border: 'none',
     boxShadow: '0 4px 16px rgba(34, 211, 238, 0.25), inset 0 1px 0 rgba(255,255,255,0.15)',
+  },
+  glassPrimary: {
+    background: 'rgba(34, 211, 238, 0.15)',
+    color: '#22D3EE',
+    border: 'none',
+    boxShadow: 'none',
+  },
+  glassPrimaryMuted: {
+    background: 'rgba(34, 211, 238, 0.15)',
+    color: 'rgba(34, 211, 238, 0.5)',
+    border: 'none',
+    boxShadow: 'none',
   },
   secondary: {
     background: 'rgba(34, 211, 238, 0.08)',

@@ -41,7 +41,7 @@ export default function OnboardingResultPage() {
     return recommendation.serviceSlugs
       .map((slug) => map.get(slug))
       .filter((item): item is NonNullable<typeof item> => Boolean(item))
-      .slice(0, 2);
+      .slice(0, 3);
   }, [recommendation.serviceSlugs, servicesQuery.data]);
 
   const recommendedCase = useMemo(() => {
@@ -88,13 +88,18 @@ export default function OnboardingResultPage() {
   const isError = meQuery.isError || servicesQuery.isError || casesQuery.isError;
 
   return (
-    <AppShell title="Результат" showBack>
-      <Card>
-        <div className="ax-col" style={{ gap: 10 }}>
-          <h1 className="h2">{resultConfig.headline}</h1>
-          <p className="p muted">{resultConfig.description}</p>
-        </div>
-      </Card>
+    <AppShell title="Результат" showBack showBottomNav>
+      <h2 style={{
+        fontSize: 26,
+        fontWeight: 300,
+        color: '#7EE8F2',
+        letterSpacing: '0.5px',
+        textShadow: '0 0 30px rgba(34,211,238,0.2)',
+        margin: 0,
+        marginBottom: 6,
+      }}>
+        {resultConfig.headline}
+      </h2>
 
       {isLoading ? (
         <div className="ax-col" style={{ gap: 12 }}>
@@ -119,114 +124,38 @@ export default function OnboardingResultPage() {
 
       {!isLoading && !isError ? (
         <>
-          <Card variant="elevated">
-            <div className="ax-col" style={{ gap: 10 }}>
-              <h2 className="h2" style={{ fontSize: 20, margin: 0 }}>
-                {servicesTitle}
-              </h2>
-              {recommendedServices.length === 0 ? (
-                <EmptyState
-                  title={servicesTitle}
-                  description={servicesEmpty}
-                  actionLabel="Смотреть услуги"
-                  onAction={() => navigate('/services')}
-                />
-              ) : (
-                recommendedServices.map((service) => (
-                  <ServiceCard
-                    key={service.id}
-                    service={service}
-                    category={categoriesMap.get(service.categoryId)}
-                    onClick={() => {
-                      track('service_opened', { service_id: service.slug, source_screen: 'SCR-ONB-030' });
-                      navigate(`/services/${service.slug}`);
-                    }}
-                  />
-                ))
-              )}
-            </div>
-          </Card>
-
-          <Button
-            variant="secondary"
-            size="lg"
-            fullWidth
-            onClick={() => navigate('/ai')}
-          >
-            Задайте вопрос искусственному интеллекту
-          </Button>
-
-          <Card variant="glass">
-            <div className="ax-col" style={{ gap: 10 }}>
-              <h2 className="h2" style={{ fontSize: 20, margin: 0 }}>
-                {caseTitle}
-              </h2>
-              {recommendedCase ? (
-                <CaseCard
-                  caseStudy={recommendedCase}
+          <div style={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-evenly',
+            gap: 10,
+          }}>
+            {recommendedServices.length === 0 ? (
+              <EmptyState
+                title={servicesTitle}
+                description={servicesEmpty}
+                actionLabel="Смотреть услуги"
+                onAction={() => navigate('/services')}
+              />
+            ) : (
+              recommendedServices.map((service) => (
+                <ServiceCard
+                  key={service.id}
+                  service={service}
+                  variant="minimal"
                   onClick={() => {
-                    track('case_opened', { case_id: recommendedCase.slug, source_screen: 'SCR-ONB-030' });
-                    navigate(`/cases/${recommendedCase.slug}`);
+                    track('service_opened', { service_id: service.slug, source_screen: 'SCR-ONB-030' });
+                    navigate(`/services/${service.slug}`);
                   }}
                 />
-              ) : (
-                <EmptyState
-                  title={caseTitle}
-                  description={caseEmpty}
-                  actionLabel="Открыть кейсы"
-                  onAction={() => navigate('/cases')}
-                />
-              )}
-            </div>
-          </Card>
+              ))
+            )}
+          </div>
 
-          {scenario ? (
-            <Card variant="interactive">
-              <div className="ax-col" style={{ gap: 8 }}>
-                <h2 className="h2" style={{ fontSize: 20, margin: 0 }}>
-                  {aiTitle}
-                </h2>
-                <p className="p" style={{ margin: 0 }}>
-                  {scenario.icon} {scenario.displayName}
-                </p>
-                <p className="p muted" style={{ margin: 0 }}>
-                  {aiDescription}
-                </p>
-                <div className="ax-row ax-row-wrap">
-                  <Button
-                    onClick={() => {
-                      track('ai_scenario_selected', { scenario_id: scenario.key, source_screen: 'SCR-ONB-030' });
-                      navigate(`/ai/chat/new?scenario=${encodeURIComponent(scenario.key)}`);
-                    }}
-                  >
-                    Запустить демо
-                  </Button>
-                </div>
-              </div>
-            </Card>
-          ) : null}
-
-          <Card variant="interactive">
-            <div className="ax-col" style={{ gap: 8 }}>
-              <h2 className="h2" style={{ fontSize: 20, margin: 0 }}>
-                {leadTitle}
-              </h2>
-              <p className="p muted" style={{ margin: 0 }}>
-                {leadDescription}
-              </p>
-              <Button
-                onClick={() => {
-                  track('cta_consultation_clicked', { source_screen: 'SCR-ONB-030' });
-                  navigate('/lead');
-                }}
-              >
-                {leadButton}
-              </Button>
-            </div>
-          </Card>
-
-          <Button variant="ghost" onClick={() => navigate('/services')}>
-            {resultConfig.skipText}
+          <Button variant="glassPrimaryMuted" fullWidth onClick={() => navigate('/ai')}
+            style={{ padding: '15px 0', fontSize: 14 }}>
+            Задайте вопрос искусственному интеллекту
           </Button>
         </>
       ) : null}

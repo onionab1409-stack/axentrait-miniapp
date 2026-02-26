@@ -34,7 +34,18 @@ export default function CasesGalleryPage() {
 
   return (
     <AppShell title="Кейсы" showBottomNav>
-      <div className="ax-row" style={{ gap: 8, overflowX: 'auto', paddingBottom: 2 }}>
+      <h2 style={{
+        fontSize: 26,
+        fontWeight: 300,
+        color: '#7EE8F2',
+        letterSpacing: '0.5px',
+        textShadow: '0 0 30px rgba(34,211,238,0.2)',
+        margin: 0,
+        marginBottom: 16,
+      }}>
+        Кейсы
+      </h2>
+      <div className="ax-row" style={{ gap: 8, overflowX: 'auto', marginBottom: 20 }}>
         <Chip active={activeIndustry === 'all'} onClick={() => setActiveIndustry('all')}>
           Все
         </Chip>

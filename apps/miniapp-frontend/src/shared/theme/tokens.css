@@ -37,7 +37,7 @@
   --ax-info-500: #3B82F6;
 
   /* ---------- Typography ---------- */
-  --ax-font-sans: system-ui, -apple-system, "SF Pro Text", Inter, Roboto, Arial, sans-serif;
+  --ax-font-sans: 'Montserrat', system-ui, -apple-system, "SF Pro Text", Inter, Roboto, Arial, sans-serif;
 
   /* ---------- Radii ---------- */
   --ax-radius-xs: 10px;
@@ -79,6 +79,51 @@
   --ax-dur-slow: 320ms;
   --ax-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ax-ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+
+  /* ============================================
+     PROTOTYPE ALIGNMENT TOKENS
+     ============================================ */
+
+  /* Heading tokens (6 из 7 экранов, кроме Service) */
+  --proto-heading-weight: 300;
+  --proto-heading-color: #7EE8F2;
+  --proto-heading-spacing: 0.5px;
+  --proto-heading-shadow: 0 0 30px rgba(34, 211, 238, 0.2);
+
+  /* Glass-morphism */
+  --proto-glass-bg: rgba(0, 0, 0, 0.3);
+  --proto-glass-blur: blur(10px);
+  --proto-glass-border: 1px solid rgba(126, 232, 242, 0.15);
+
+  /* Teal palette */
+  --proto-teal-70: rgba(126, 232, 242, 0.7);
+  --proto-teal-60: rgba(126, 232, 242, 0.6);
+  --proto-teal-55: rgba(126, 232, 242, 0.55);
+  --proto-teal-50: rgba(126, 232, 242, 0.5);
+  --proto-teal-40: rgba(126, 232, 242, 0.4);
+  --proto-teal-30: rgba(126, 232, 242, 0.3);
+  --proto-teal-15: rgba(126, 232, 242, 0.15);
+
+  /* Button glass (навигация) */
+  --proto-btn-glass-bg: rgba(34, 211, 238, 0.15);
+  --proto-btn-glass-color: #22D3EE;
+
+  /* Button solid (конверсия) */
+  --proto-btn-solid-bg: linear-gradient(135deg, #22D3EE, #06B6D4);
+  --proto-btn-solid-color: #050A0F;
+  --proto-btn-solid-shadow: 0 4px 20px rgba(34, 211, 238, 0.25);
+
+  /* Card tokens */
+  --proto-card-radius: 18px;
+  --proto-card-border: 1px solid rgba(255, 255, 255, 0.06);
+
+  /* Bottom Nav */
+  --proto-nav-bg: rgba(5, 10, 15, 0.7);
+  --proto-nav-blur: blur(20px);
+  --proto-nav-border: 1px solid rgba(255, 255, 255, 0.06);
+  --proto-nav-inactive: rgba(240, 246, 252, 0.35);
+  --proto-nav-active: #22D3EE;
+  --proto-nav-label-size: 10px;
 }
 
 /* Light theme */

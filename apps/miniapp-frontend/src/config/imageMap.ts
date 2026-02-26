@@ -7,6 +7,7 @@ export const IMAGE_MAP = {
   'hero-main': '/images/heroes/hero-main.webp',
   'hero-ai-hub': '/images/heroes/hero-ai-hub.webp',
   'splash-bg': '/images/heroes/splash-bg.webp',
+  'survey-bg': '/images/heroes/survey-bg.webp',
 
   // Cases
   'case-fintech': '/images/cases/case-fintech.webp',
@@ -32,6 +33,7 @@ export const FALLBACK_GRADIENTS: Record<string, string> = {
   'hero-main': 'radial-gradient(ellipse at 50% 30%, rgba(47,107,255,0.15), rgba(5,10,15,0.95) 70%)',
   'hero-ai-hub': 'radial-gradient(ellipse at 50% 40%, rgba(34,211,238,0.12), rgba(5,10,15,0.95) 70%)',
   'splash-bg': 'radial-gradient(circle at 50% 45%, rgba(34,211,238,0.08), rgba(5,10,15,0.98) 60%)',
+  'survey-bg': 'radial-gradient(ellipse at 50% 30%, rgba(34,211,238,0.12), rgba(5,10,15,0.95) 70%)',
 
   'case-fintech': 'linear-gradient(145deg, rgba(47,107,255,0.12), rgba(5,10,15,0.95))',
   'case-retail': 'linear-gradient(145deg, rgba(34,211,238,0.10), rgba(5,10,15,0.95))',

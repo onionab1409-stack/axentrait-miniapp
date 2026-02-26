@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { AppShell } from '../../components/layout/AppShell';
-import { Card } from '../../components/ui/Card';
+import { BottomNav } from '../../components/layout/BottomNav';
+import { ToastHost } from '../../components/ui/ToastHost';
+import { MjImage } from '../../components/ui/MjImage';
 import { ErrorState } from '../../components/ui/ErrorState';
 import { Skeleton } from '../../components/ui/Skeleton';
 import { lookupScenarioMeta } from '../../shared/data';
@@ -9,7 +10,6 @@ import { track } from '../../shared/analytics/track';
 import { uid } from '../../shared/utils/id';
 import { useUiStore } from '../../shared/store/uiStore';
 import { ChatMessageBubble } from '../../components/domain/ChatMessageBubble';
-import { QuickPromptChips } from '../../components/domain/QuickPromptChips';
 import { ChatComposer } from '../../components/domain/ChatComposer';
 import { useAiChat } from './hooks/useAiChat';
 
@@ -58,35 +58,6 @@ export default function AiChatPage() {
   const maxTurns = Math.max(1, scenario?.maxTurns ?? 6);
   const usedTurns = chat.messages.filter((message) => message.role === 'user').length;
 
-  const quickPrompts = useMemo(() => {
-    if (scenarioKey === 'ai.scenario.audit') {
-      return [
-        'Ручной процесс закупок в ERP',
-        'Обработка обращений в техподдержке',
-        'Согласование договоров между отделами',
-      ];
-    }
-    if (scenarioKey === 'ai.scenario.usecase_finder') {
-      return [
-        'Подберите AI-сценарии для e-commerce поддержки',
-        'Нужны идеи AI-пилота для логистики',
-        'Где быстрее всего получить эффект в SaaS-команде?',
-      ];
-    }
-    if (scenarioKey === 'ai.scenario.roi') {
-      return [
-        'Оцените ROI автоматизации обработки заявок',
-        'Посчитайте окупаемость внедрения AI-ассистента',
-        'Сравните экономику “как есть” и “как будет”',
-      ];
-    }
-    return [
-      'Сколько обычно длится пилот?',
-      'Как выбрать подходящий пакет?',
-      'С чего начать внедрение безопасно?',
-    ];
-  }, [scenarioKey]);
-
   const send = async (messageText: string) => {
     const content = messageText.trim().slice(0, AI_MAX_MESSAGE_LENGTH);
     if (!content || chat.isStreaming) return;
@@ -134,105 +105,115 @@ export default function AiChatPage() {
   };
 
   return (
-    <AppShell title="Задайте вопрос искусственному интеллекту" showBack showBottomNav>
-      {!isOnline ? (
-        <ErrorState
-          title="AI недоступен офлайн"
-          description="Подключитесь к интернету, чтобы отправлять сообщения и получать ответы."
-        />
-      ) : null}
-
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 8,
-          padding: '8px 14px',
-          background: 'rgba(245, 158, 11, 0.06)',
-          borderRadius: 10,
-          fontSize: 12,
-          color: 'rgba(240, 246, 252, 0.5)',
-          marginBottom: 12,
-          border: '1px solid rgba(245, 158, 11, 0.1)',
-        }}
-      >
-        <span style={{ fontSize: 14 }}>⚠️</span>
-        <span>Не передавайте ПДн и коммерческие тайны</span>
-        <span style={{ marginLeft: 'auto', color: '#22D3EE', fontWeight: 600 }}>
-          {usedTurns}/{maxTurns}
-        </span>
+    <div style={{ position: 'fixed', inset: 0, display: 'flex', flexDirection: 'column' }}>
+      {/* Fullscreen background */}
+      <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+        <MjImage id="hero-ai-hub" height="100%" borderRadius={0} scrim={false} alt="AI bg" />
       </div>
 
-      {chat.error ? (
-        <Card>
-          <p className="p" style={{ color: 'var(--ax-error-500)' }}>
+      {/* Content */}
+      <div style={{
+        position: 'relative', zIndex: 1, height: '100%',
+        display: 'flex', flexDirection: 'column',
+        padding: '64px 20px 80px',
+      }}>
+        <h1 style={{
+          fontSize: 26,
+          fontWeight: 300,
+          color: '#7EE8F2',
+          letterSpacing: '0.5px',
+          textShadow: '0 0 30px rgba(34,211,238,0.2)',
+          margin: 0,
+          marginBottom: 20,
+        }}>
+          Задайте вопрос<br/>искусственному интеллекту
+        </h1>
+
+        {!isOnline ? (
+          <ErrorState
+            title="AI недоступен офлайн"
+            description="Подключитесь к интернету, чтобы отправлять сообщения и получать ответы."
+          />
+        ) : null}
+
+        {chat.error ? (
+          <p style={{ color: 'var(--ax-error-500)', fontSize: 14, margin: '0 0 12px' }}>
             {chat.error}
           </p>
-        </Card>
-      ) : null}
+        ) : null}
 
-      {chat.isLoading && chat.messages.length === 0 ? (
-        <div className="ax-col" style={{ gap: 12 }}>
-          <Skeleton height={120} />
-          <Skeleton height={100} />
-        </div>
-      ) : null}
-
-      {!chat.isLoading && chat.isError && chat.messages.length === 0 ? (
-        <ErrorState
-          title="Не удалось открыть чат"
-          description={chat.error ?? 'Сервис AI временно недоступен'}
-          onRetry={() => {
-            void chat.refetchMessages();
-            chat.clearError();
-          }}
-        />
-      ) : null}
-
-      {!chat.isLoading ? (
-        <>
-          <div ref={listRef} className="ax-chat-list">
-            {chat.messages.length === 0 ? (
-              <ChatMessageBubble
-                message={{
-                  id: 'welcome',
-                  role: 'assistant',
-                  content: 'Здравствуйте! Я AI-ассистент Axentrait. Задайте вопрос о наших услугах, кейсах или опишите вашу задачу.',
-                  createdAt: new Date().toISOString(),
-                }}
-              />
-            ) : null}
-
-            {chat.messages.map((message) => (
-              <ChatMessageBubble key={message.id} message={message} />
-            ))}
-
-            {chat.isStreaming ? (
-              <article className="bubble-bot" style={{ width: 'fit-content' }}>
-                <div className="ai-loading-dots" style={{ padding: 0 }}>
-                  <div className="ai-loading-dot" />
-                  <div className="ai-loading-dot" />
-                  <div className="ai-loading-dot" />
-                </div>
-              </article>
-            ) : null}
+        {chat.isLoading && chat.messages.length === 0 ? (
+          <div className="ax-col" style={{ gap: 12 }}>
+            <Skeleton height={120} />
+            <Skeleton height={100} />
           </div>
+        ) : null}
 
-          <QuickPromptChips prompts={quickPrompts} onSelect={(prompt) => setDraft(prompt)} />
-
-          <ChatComposer
-            value={draft}
-            placeholder="Напишите сообщение..."
-            maxLength={AI_MAX_MESSAGE_LENGTH}
-            isStreaming={chat.isStreaming || !isOnline}
-            onChange={setDraft}
-            onSend={() => {
-              void send(draft);
+        {!chat.isLoading && chat.isError && chat.messages.length === 0 ? (
+          <ErrorState
+            title="Не удалось открыть чат"
+            description={chat.error ?? 'Сервис AI временно недоступен'}
+            onRetry={() => {
+              void chat.refetchMessages();
+              chat.clearError();
             }}
-            onOpenResult={() => navigate(`/ai/result/${chat.sessionId ?? routeSessionId}`)}
           />
-        </>
-      ) : null}
-    </AppShell>
+        ) : null}
+
+        {!chat.isLoading ? (
+          <>
+            <div ref={listRef} style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-end',
+              gap: 12,
+              marginBottom: 16,
+              overflowY: 'auto',
+            }}>
+              {chat.messages.length === 0 ? (
+                <ChatMessageBubble
+                  message={{
+                    id: 'welcome',
+                    role: 'assistant',
+                    content: 'Здравствуйте! Я AI-ассистент Axentrait. Задайте вопрос о наших услугах, кейсах или опишите вашу задачу.',
+                    createdAt: new Date().toISOString(),
+                  }}
+                />
+              ) : null}
+
+              {chat.messages.map((message) => (
+                <ChatMessageBubble key={message.id} message={message} />
+              ))}
+
+              {chat.isStreaming ? (
+                <article className="bubble-bot" style={{ width: 'fit-content' }}>
+                  <div className="ai-loading-dots" style={{ padding: 0 }}>
+                    <div className="ai-loading-dot" />
+                    <div className="ai-loading-dot" />
+                    <div className="ai-loading-dot" />
+                  </div>
+                </article>
+              ) : null}
+            </div>
+
+            <ChatComposer
+              value={draft}
+              placeholder="Напишите сообщение..."
+              maxLength={AI_MAX_MESSAGE_LENGTH}
+              isStreaming={chat.isStreaming || !isOnline}
+              onChange={setDraft}
+              onSend={() => {
+                void send(draft);
+              }}
+              onOpenResult={() => navigate(`/ai/result/${chat.sessionId ?? routeSessionId}`)}
+            />
+          </>
+        ) : null}
+      </div>
+
+      <BottomNav />
+      <ToastHost />
+    </div>
   );
 }

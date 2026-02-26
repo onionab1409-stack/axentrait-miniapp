@@ -6,12 +6,12 @@ type ChatMessageBubbleProps = {
 };
 
 const avatarStyle: CSSProperties = {
-  width: 32,
-  height: 32,
+  width: 28,
+  height: 28,
   borderRadius: '50%',
-  background: 'linear-gradient(135deg, #22D3EE, #0891B2)',
-  color: '#fff',
-  fontSize: 11,
+  background: 'linear-gradient(135deg, #22D3EE, #06B6D4)',
+  color: '#050A0F',
+  fontSize: 10,
   fontWeight: 700,
   display: 'flex',
   alignItems: 'center',

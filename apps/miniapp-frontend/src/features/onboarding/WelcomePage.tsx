@@ -101,12 +101,14 @@ export default function WelcomePage() {
           <h1
             style={{
               fontSize: 28,
-              fontWeight: 700,
-              lineHeight: 1.25,
-              color: '#fff',
+              fontWeight: 300,
+              lineHeight: 1.15,
+              color: '#7EE8F2',
               textAlign: 'center',
               margin: 0,
               maxWidth: 340,
+              letterSpacing: '0.5px',
+              textShadow: '0 0 30px rgba(34,211,238,0.2)',
             }}
           >
             {welcome.headline}
@@ -122,12 +124,24 @@ export default function WelcomePage() {
             paddingBottom: 48,
           }}
         >
-          <Button variant="primary" size="lg" fullWidth onClick={startOnboarding}>
+          <Button variant="glassPrimary" size="lg" fullWidth onClick={startOnboarding}
+            style={{ padding: '15px 0', fontSize: 15 }}>
             {welcome.ctaButton}
           </Button>
-          <Button variant="secondary" size="lg" fullWidth onClick={openCases}>
-            Смотреть кейсы
-          </Button>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <Button variant="secondary" onClick={openCases} style={{
+              padding: '11px 22px',
+              borderRadius: 12,
+              fontSize: 13,
+              fontWeight: 500,
+              color: 'rgba(34,211,238,0.6)',
+              borderColor: 'rgba(34,211,238,0.15)',
+              background: 'transparent',
+              minHeight: 'auto',
+            }}>
+              Смотреть кейсы
+            </Button>
+          </div>
         </div>
       </div>
     </div>

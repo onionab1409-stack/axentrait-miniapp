@@ -1,5 +1,4 @@
 import { ArrowRight } from 'lucide-react';
-import { Button } from '../ui/Button';
 
 type ChatComposerProps = {
   value: string;
@@ -18,70 +17,73 @@ export function ChatComposer({
   isStreaming,
   onChange,
   onSend,
-  onOpenResult,
 }: ChatComposerProps) {
   const disabled = Boolean(isStreaming || value.trim().length === 0);
 
   return (
-    <>
-      <div className="ax-row" style={{ justifyContent: 'flex-end' }}>
-        <Button variant="ghost" size="sm" onClick={onOpenResult}>
-          Показать результат
-        </Button>
-      </div>
-
-      <div
+    <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+      <textarea
+        className="chat-input"
+        maxLength={maxLength}
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            if (!disabled) onSend();
+          }
+        }}
         style={{
-          display: 'flex',
-          gap: 8,
-          padding: '10px 12px',
-          background: 'rgba(12, 22, 32, 0.9)',
-          borderTop: '1px solid rgba(255, 255, 255, 0.06)',
+          flex: 1,
+          background: 'rgba(0,0,0,0.3)',
+          backdropFilter: 'blur(10px)',
+          WebkitBackdropFilter: 'blur(10px)',
+          border: '1px solid rgba(126,232,242,0.15)',
           borderRadius: 14,
-          position: 'sticky',
-          bottom: 'calc(64px + env(safe-area-inset-bottom, 0px))',
-          zIndex: 5,
-          backdropFilter: 'blur(8px)',
+          padding: '14px 16px',
+          color: '#F0F6FC',
+          fontSize: 14,
+          fontWeight: 300,
+          resize: 'none',
+          outline: 'none',
+          minHeight: 44,
+          maxHeight: 120,
+        }}
+        placeholder={placeholder}
+      />
+
+      <button
+        type="button"
+        onClick={onSend}
+        disabled={disabled}
+        style={{
+          width: 44,
+          height: 44,
+          borderRadius: 12,
+          background: 'rgba(34,211,238,0.15)',
+          border: 'none',
+          boxShadow: 'none',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: disabled ? 'not-allowed' : 'pointer',
+          flexShrink: 0,
+          opacity: disabled ? 0.4 : 1,
         }}
       >
-        <textarea
-          maxLength={maxLength}
-          value={value}
-          onChange={(event) => onChange(event.target.value)}
-          onKeyDown={(event) => {
-            if (event.key === 'Enter' && !event.shiftKey) {
-              event.preventDefault();
-              if (!disabled) onSend();
-            }
-          }}
-          style={{
-            flex: 1,
-            background: 'rgba(255, 255, 255, 0.04)',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
-            borderRadius: 12,
-            padding: '12px 14px',
-            color: '#F0F6FC',
-            fontSize: 15,
-            resize: 'none',
-            outline: 'none',
-            minHeight: 44,
-            maxHeight: 120,
-          }}
-          placeholder={placeholder}
-        />
-
-        <Button
-          variant="primary"
-          size="sm"
-          onClick={onSend}
-          disabled={disabled}
-          loading={Boolean(isStreaming)}
-          icon={<ArrowRight size={16} />}
-          style={{ borderRadius: 12, padding: '12px 14px', alignSelf: 'flex-end', minWidth: 44 }}
-        >
-          {!isStreaming ? '→' : ''}
-        </Button>
-      </div>
-    </>
+        {isStreaming ? (
+          <span style={{
+            width: 16, height: 16,
+            border: '2px solid rgba(34,211,238,0.5)',
+            borderTopColor: 'transparent',
+            borderRadius: '50%',
+            animation: 'spin 0.8s linear infinite',
+            display: 'inline-block',
+          }} />
+        ) : (
+          <ArrowRight size={18} color="rgba(34,211,238,0.5)" />
+        )}
+      </button>
+    </div>
   );
 }

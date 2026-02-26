@@ -16,7 +16,7 @@ const CaseDetailPage = lazy(() => import('../features/cases/CaseDetailPage'));
 const CaseBeforeAfterPage = lazy(() => import('../features/cases/CaseBeforeAfterPage'));
 const CaseMediaPage = lazy(() => import('../features/cases/CaseMediaPage'));
 
-const AiHubPage = lazy(() => import('../features/ai/AiHubPage'));
+// AiHubPage removed — /ai now goes directly to AiChatPage
 const AiChatPage = lazy(() => import('../features/ai/AiChatPage'));
 const AiResultPage = lazy(() => import('../features/ai/AiResultPage'));
 
@@ -43,7 +43,7 @@ export const router = createHashRouter([
   { path: '/cases/:id/before-after', element: <CaseBeforeAfterPage /> },
   { path: '/cases/:id/media', element: <CaseMediaPage /> },
 
-  { path: '/ai', element: <AiHubPage /> },
+  { path: '/ai', element: <AiChatPage /> },
   { path: '/ai/chat/:sessionId', element: <AiChatPage /> },
   { path: '/ai/result/:sessionId', element: <AiResultPage /> },
 
