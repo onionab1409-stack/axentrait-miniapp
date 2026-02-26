@@ -11,7 +11,7 @@ export const IMAGE_MAP = {
 
   // Cases
   'case-fintech': '/images/cases/case-fintech.webp',
-  'case-retail': null,
+  'case-retail': '/images/cases/case-retail.webp',
   'case-logistics': '/images/cases/case-logistics.webp',
   'case-medtech': '/images/cases/case-medtech.webp',
   'case-saas': '/images/cases/case-saas.webp',
@@ -19,11 +19,11 @@ export const IMAGE_MAP = {
   'case-ecommerce': '/images/cases/case-ecommerce.webp',
 
   // Services
-  'svc-security': null,
+  'svc-security': '/images/services/svc-security.webp',
   'svc-process': '/images/services/svc-process.webp',
   'svc-automation': '/images/services/svc-automation.webp',
   'svc-ai': '/images/services/svc-ai.webp',
-  'svc-devops': null,
+  'svc-devops': '/images/services/svc-devops.webp',
   'svc-iot': '/images/services/svc-iot.webp',
   'svc-data': '/images/services/svc-data.webp',
 };

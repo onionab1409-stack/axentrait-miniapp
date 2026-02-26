@@ -1,0 +1,11 @@
+node_modules
+apps/*/node_modules
+.git
+.pnpm-store
+dist
+apps/*/dist
+*.log
+.env
+.env.*
+backups
+smoke
