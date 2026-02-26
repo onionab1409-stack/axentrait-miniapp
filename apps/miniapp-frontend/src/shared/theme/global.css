@@ -283,7 +283,7 @@ select {
 .ax-chat-list {
   display: flex;
   flex-direction: column;
-  gap: var(--ax-space-2);
+  gap: 12px;
   max-height: min(55dvh, 520px);
   overflow: auto;
   padding-right: 2px;
@@ -583,26 +583,34 @@ label {
 }
 
 .bubble-bot {
-  background: rgba(15, 30, 45, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(126, 232, 242, 0.08);
   border-radius: 18px 18px 18px 6px;
   padding: 14px 16px;
   max-width: 85%;
   color: rgba(240, 246, 252, 0.85);
   font-size: 14px;
+  font-weight: 300;
   line-height: 1.5;
 }
 
 .bubble-user {
-  background: linear-gradient(135deg, rgba(34, 211, 238, 0.12), rgba(34, 211, 238, 0.06));
-  border: 1px solid rgba(34, 211, 238, 0.15);
+  background: rgba(34, 211, 238, 0.08);
+  border: 1px solid rgba(126, 232, 242, 0.12);
   border-radius: 18px 18px 6px 18px;
   padding: 14px 16px;
   max-width: 85%;
   color: #f0f6fc;
   font-size: 14px;
+  font-weight: 300;
   line-height: 1.5;
   margin-left: auto;
+}
+
+.chat-input::placeholder {
+  color: rgba(126, 232, 242, 0.3);
 }
 
 @keyframes fadeIn {

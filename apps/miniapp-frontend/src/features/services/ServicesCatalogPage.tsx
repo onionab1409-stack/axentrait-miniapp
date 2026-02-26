@@ -66,18 +66,32 @@ export default function ServicesCatalogPage() {
 
   return (
     <AppShell title="Услуги" showBottomNav>
+      <h2 style={{
+        fontSize: 26,
+        fontWeight: 300,
+        color: '#7EE8F2',
+        letterSpacing: '0.5px',
+        textShadow: '0 0 30px rgba(34,211,238,0.2)',
+        margin: 0,
+        marginBottom: 16,
+      }}>
+        Услуги
+      </h2>
+
       <div className="ax-col ax-sticky-top" style={{ gap: 10 }}>
         <label
           className="ax-row"
           style={{
-            border: '1px solid var(--app-border)',
-            background: 'color-mix(in srgb, var(--app-card) 94%, transparent)',
-            borderRadius: 12,
+            border: '1px solid rgba(126,232,242,0.15)',
+            background: 'rgba(0,0,0,0.3)',
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)',
+            borderRadius: 14,
             minHeight: 44,
             paddingInline: 12,
           }}
         >
-          <Search size={16} color="var(--app-text-muted)" />
+          <Search size={16} color="rgba(126,232,242,0.4)" />
           <input
             className="ax-input"
             value={search}
@@ -87,7 +101,7 @@ export default function ServicesCatalogPage() {
           />
         </label>
 
-        <div className="ax-row" style={{ gap: 8, overflowX: 'auto', paddingBottom: 2 }}>
+        <div className="ax-row" style={{ gap: 8, overflowX: 'auto', marginBottom: 20 }}>
           <Chip active={activeCategory === 'all'} onClick={() => setActiveCategory('all')}>
             Все
           </Chip>
