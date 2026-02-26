@@ -630,3 +630,13 @@ label {
 button:active:not(:disabled) {
   transform: scale(0.97);
 }
+
+/* ============================================
+   PROTOTYPE HEADING UTILITY
+   ============================================ */
+.proto-heading {
+  font-weight: var(--proto-heading-weight);
+  color: var(--proto-heading-color);
+  letter-spacing: var(--proto-heading-spacing);
+  text-shadow: var(--proto-heading-shadow);
+}
