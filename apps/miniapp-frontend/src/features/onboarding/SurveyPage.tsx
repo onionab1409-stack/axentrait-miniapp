@@ -26,7 +26,8 @@ function optionStyle(isSelected: boolean): React.CSSProperties {
     border: 'none',
     cursor: 'pointer',
     transition: 'all 150ms ease',
-    textAlign: 'left',
+    textAlign: 'left' as const,
+    width: 'auto',          /* H5 FIX: force shrink-wrap, prevent block-level */
   };
 }
 
@@ -161,10 +162,32 @@ export default function SurveyPage() {
         <div className="ax-step-slide-left" style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
           {/* Dots + counter */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-            <div className="ax-dots" style={{ gap: 6 }} aria-label="progress dots">
+            <div style={{ display: 'flex', gap: 6 }} aria-label="progress dots">
               {Array.from({ length: questions.length }).map((_, i) => {
-                const stateClass = i < safeStep ? 'active' : i === safeStep ? 'current' : '';
-                return <span key={`dot_${i}`} className={`ax-dot ${stateClass}`.trim()} />;
+                /* H4 FIX: solid dots — completed=semi, current=solid, future=dim */
+                let bg: string;
+                let shadow: string | undefined;
+                if (i < safeStep) {
+                  bg = 'rgba(34,211,238,0.5)';         /* H10 FIX: cyan instead of blue */
+                } else if (i === safeStep) {
+                  bg = '#22D3EE';                        /* H4 FIX: solid fill, no ring */
+                  shadow = '0 0 8px rgba(34,211,238,0.4)';
+                } else {
+                  bg = 'rgba(240,246,252,0.2)';
+                }
+                return (
+                  <span
+                    key={`dot_${i}`}
+                    style={{
+                      width: 8,
+                      height: 8,
+                      borderRadius: '50%',
+                      background: bg,
+                      boxShadow: shadow,
+                      transition: 'all 150ms ease',
+                    }}
+                  />
+                );
               })}
             </div>
             <span style={{ fontSize: 12, color: 'rgba(126,232,242,0.4)' }}>
@@ -172,7 +195,7 @@ export default function SurveyPage() {
             </span>
           </div>
 
-          {/* Title */}
+          {/* H3 FIX: maxWidth forces long titles to wrap to 2 lines */}
           <h2 style={{
             fontSize: 26,
             fontWeight: 300,
@@ -181,16 +204,17 @@ export default function SurveyPage() {
             textShadow: '0 0 30px rgba(34,211,238,0.2)',
             margin: 0,
             marginBottom: 16,
+            maxWidth: '80%',
           }}>
             {currentQuestion.title}
           </h2>
 
-          {/* Options */}
+          {/* H6 FIX: space-between distributes options evenly */}
           <div style={{
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'flex-start',
-            gap: 10,
+            justifyContent: 'space-between',
             flex: 1,
             padding: '10px 0',
           }}>
@@ -220,7 +244,7 @@ export default function SurveyPage() {
             })}
           </div>
 
-          {/* Action button */}
+          {/* H7 FIX: reduced padding for ~48px height instead of ~60px */}
           <Button
             variant="glassPrimary"
             size="lg"
@@ -229,7 +253,7 @@ export default function SurveyPage() {
             onClick={() => {
               void next();
             }}
-            style={{ marginTop: 16, padding: '15px 0', fontSize: 15 }}
+            style={{ marginTop: 16, padding: '12px 0', fontSize: 15, minHeight: 48 }}
           >
             {actionLabel}
           </Button>
