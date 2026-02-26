@@ -24,6 +24,7 @@ export function ChatComposer({
     <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
       <textarea
         className="chat-input"
+        rows={1}
         maxLength={maxLength}
         value={value}
         onChange={(event) => onChange(event.target.value)}
