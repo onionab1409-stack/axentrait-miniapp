@@ -77,6 +77,7 @@ export default function ServicesCatalogPage() {
 
   return (
     <AppShell title="Услуги" showBottomNav>
+      <div style={{ background: '#050A0F', minHeight: '100vh', margin: '-16px -20px', padding: '16px 20px' }}>
       {/* H20 FIX: убран дублирующий H2 "Услуги" — заголовок только в TopBar */}
 
       <div className="ax-col ax-sticky-top" style={{ gap: 10 }}>
@@ -219,6 +220,7 @@ export default function ServicesCatalogPage() {
           })}
         </div>
       ) : null}
+      </div>
     </AppShell>
   );
 }
