@@ -1,4 +1,3 @@
-import { getTagLabel } from '../../config/tagLabels';
 import type { CaseStudy } from '../../shared/types/content';
 import { MjImage } from '../ui/MjImage';
 
@@ -20,38 +19,41 @@ export function CaseCard({ caseStudy, onClick }: { caseStudy: CaseStudy; onClick
       type="button"
       onClick={onClick}
       style={{
-        border: '1px solid var(--app-border)',
-        borderRadius: 16,
+        border: '1px solid rgba(255,255,255,0.06)',
+        borderRadius: 18,
         overflow: 'hidden',
-        background: 'var(--app-card)',
+        height: 200,
+        background: 'transparent',
         padding: 0,
         textAlign: 'left',
-        cursor: 'pointer',
+        cursor: onClick ? 'pointer' : 'default',
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        width: '100%',
       }}
     >
-      <MjImage id={imageId} height={180} borderRadius={0} alt={caseStudy.title}>
-        <div style={{ fontSize: 11, color: 'rgba(240,246,252,0.45)', marginBottom: 4 }}>{caseStudy.clientIndustry}</div>
-        <div style={{ fontSize: 16, fontWeight: 700, lineHeight: 1.25, marginBottom: 6, color: '#fff' }}>{caseStudy.title}</div>
-        {caseStudy.metrics.headline ? (
-          <div style={{ fontSize: 14, color: '#22D3EE', fontWeight: 600, marginBottom: 8 }}>{caseStudy.metrics.headline}</div>
-        ) : null}
-        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-          {caseStudy.tags.slice(0, 3).map((tag) => (
-            <span
-              key={tag}
-              style={{
-                fontSize: 11,
-                color: 'rgba(240,246,252,0.9)',
-                border: '1px solid rgba(240,246,252,0.24)',
-                borderRadius: 999,
-                padding: '2px 8px',
-              }}
-            >
-              {getTagLabel(tag)}
-            </span>
-          ))}
-        </div>
-      </MjImage>
+      <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+        <MjImage id={imageId} height="100%" borderRadius={0} scrim={false} alt={caseStudy.title} />
+      </div>
+      <div style={{
+        position: 'absolute', inset: 0, zIndex: 1,
+        background: 'linear-gradient(180deg, transparent 40%, rgba(5,10,15,0.8) 100%)',
+        borderRadius: 18,
+      }} />
+      <span style={{
+        fontSize: 16,
+        fontWeight: 300,
+        lineHeight: 1.25,
+        letterSpacing: '0.5px',
+        color: '#7EE8F2',
+        position: 'relative',
+        zIndex: 2,
+        padding: 16,
+      }}>
+        {caseStudy.title}
+      </span>
     </button>
   );
 }
