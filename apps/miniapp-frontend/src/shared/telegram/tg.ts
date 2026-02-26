@@ -11,6 +11,7 @@ export type TgThemeParams = {
 export type TgWebApp = {
   ready?: () => void;
   expand?: () => void;
+  disableVerticalSwipes?: () => void;
   initData?: string;
   initDataUnsafe?: Record<string, unknown>;
   colorScheme?: 'light' | 'dark';
@@ -62,6 +63,11 @@ export function tgReady() {
 export function tgExpand() {
   const tg = getTg();
   tg?.expand?.();
+}
+
+export function tgDisableVerticalSwipes() {
+  const tg = getTg();
+  tg?.disableVerticalSwipes?.();
 }
 
 export function tgInitData(): string {

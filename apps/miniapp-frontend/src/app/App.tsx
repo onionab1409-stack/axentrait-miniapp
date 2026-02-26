@@ -1,7 +1,7 @@
 import { Suspense, useEffect, useMemo, useState } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './router';
-import { tgExpand, tgReady } from '../shared/telegram/tg';
+import { tgExpand, tgReady, tgDisableVerticalSwipes } from '../shared/telegram/tg';
 import { initTelegramThemeBridge } from '../shared/theme/telegramTheme';
 import { OfflineBanner } from '../components/ui/OfflineBanner';
 import { initAuth } from '../shared/api/authInit';
@@ -16,6 +16,7 @@ export function App() {
   useEffect(() => {
     tgReady();
     tgExpand();
+    tgDisableVerticalSwipes();
     initTelegramThemeBridge();
     trackEvent('app_opened', { screen_id: 'app_root' });
 
