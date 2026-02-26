@@ -609,8 +609,11 @@ label {
   margin-left: auto;
 }
 
-.chat-input::placeholder {
+.chat-input::placeholder,
+.glass-input::placeholder {
   color: rgba(126, 232, 242, 0.3);
+  font-weight: 300;
+  font-size: 14px;
 }
 
 @keyframes fadeIn {

@@ -3,14 +3,25 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Search } from 'lucide-react';
 import { AppShell } from '../../components/layout/AppShell';
-import { ServiceCard } from '../../components/domain/ServiceCard';
 import { Chip } from '../../components/ui/Chip';
 import { Skeleton } from '../../components/ui/Skeleton';
 import { EmptyState } from '../../components/ui/EmptyState';
 import { ErrorState } from '../../components/ui/ErrorState';
 import { fetchCategories } from '../../shared/api/contentApi';
 import { track } from '../../shared/analytics/track';
+import { getBackground } from '../../config/imageMap';
 import { useServices } from './hooks/useServices';
+
+/* slug → imageMap id (зеркало ServiceCard.SERVICE_IMAGE_MAP) */
+const SERVICE_IMAGE_MAP: Record<string, string> = {
+  'cybersecurity-audit-protection': 'svc-security',
+  'process-optimization-audit-kpi': 'svc-process',
+  'automation-rpa-crm-erp': 'svc-automation',
+  'ai-integration-use-cases-mlops': 'svc-ai',
+  'cloud-devops-ci-cd-platform': 'svc-devops',
+  'iot-digital-twins-pilot-platform': 'svc-iot',
+  'data-analytics-platform-bi': 'svc-data',
+};
 
 const CATEGORY_SHORT_LABELS: Record<string, string> = {
   'Кибербезопасность и защита персональных данных': 'Безопасность',
@@ -66,19 +77,10 @@ export default function ServicesCatalogPage() {
 
   return (
     <AppShell title="Услуги" showBottomNav>
-      <h2 style={{
-        fontSize: 26,
-        fontWeight: 300,
-        color: '#7EE8F2',
-        letterSpacing: '0.5px',
-        textShadow: '0 0 30px rgba(34,211,238,0.2)',
-        margin: 0,
-        marginBottom: 16,
-      }}>
-        Услуги
-      </h2>
+      {/* H20 FIX: убран дублирующий H2 "Услуги" — заголовок только в TopBar */}
 
       <div className="ax-col ax-sticky-top" style={{ gap: 10 }}>
+        {/* H21 FIX: glass search bar */}
         <label
           className="ax-row"
           style={{
@@ -93,11 +95,21 @@ export default function ServicesCatalogPage() {
         >
           <Search size={16} color="rgba(126,232,242,0.4)" />
           <input
-            className="ax-input"
+            className="glass-input"
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder="Поиск услуги по задаче или тегу"
-            style={{ border: 0, background: 'transparent', minHeight: 42, paddingLeft: 0 }}
+            style={{
+              border: 0,
+              background: 'transparent',
+              minHeight: 42,
+              paddingLeft: 0,
+              width: '100%',
+              color: '#F0F6FC',
+              fontSize: 14,
+              fontWeight: 300,
+              outline: 'none',
+            }}
           />
         </label>
 
@@ -118,9 +130,9 @@ export default function ServicesCatalogPage() {
       </div>
 
       {servicesQuery.isLoading ? (
-        <div className="ax-col" style={{ gap: 12 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           {Array.from({ length: 4 }).map((_, index) => (
-            <Skeleton key={`svc_skeleton_${index}`} height={160} />
+            <Skeleton key={`svc_skeleton_${index}`} height={200} />
           ))}
         </div>
       ) : null}
@@ -148,20 +160,61 @@ export default function ServicesCatalogPage() {
         />
       ) : null}
 
+      {/* H18+H19 FIX: mj-card стиль — bg image + только title cyan/300 */}
       {!servicesQuery.isLoading && !hasError && filtered.length > 0 ? (
-        <div className="ax-col" style={{ gap: 12 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           {filtered.map((service) => {
-            const category = categories.find((item) => item.id === service.categoryId);
+            const imageId = SERVICE_IMAGE_MAP[service.slug] ?? 'svc-process';
+            const bg = getBackground(imageId);
+
             return (
-              <ServiceCard
+              <button
                 key={service.id}
-                service={service}
-                category={category?.title}
+                type="button"
                 onClick={() => {
                   track('service_opened', { service_id: service.slug });
                   navigate(`/services/${service.slug}`);
                 }}
-              />
+                style={{
+                  width: '100%',
+                  height: 200,
+                  borderRadius: 18,
+                  overflow: 'hidden',
+                  position: 'relative',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-end',
+                  padding: 16,
+                  border: '1px solid rgba(255,255,255,0.06)',
+                  backgroundImage: bg,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                }}
+              >
+                {/* Scrim gradient для читаемости текста */}
+                <div style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'linear-gradient(180deg, transparent 40%, rgba(5,10,15,0.8) 100%)',
+                  borderRadius: 18,
+                  pointerEvents: 'none',
+                }} />
+
+                {/* Только название — без category, description, badges, price */}
+                <span style={{
+                  fontSize: 16,
+                  fontWeight: 300,
+                  lineHeight: 1.25,
+                  letterSpacing: '0.5px',
+                  color: '#7EE8F2',
+                  position: 'relative',
+                  zIndex: 1,
+                }}>
+                  {service.title}
+                </span>
+              </button>
             );
           })}
         </div>
